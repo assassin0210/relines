@@ -1,7 +1,13 @@
 import React from "react"
 
+import { ModalProvider } from "./providers/ModalProvider"
+
 function App() {
-  return <div className="App">123</div>
+  return (
+    <ModalProvider>
+      <div className="App">123</div>
+    </ModalProvider>
+  )
 }
 
 export default App
