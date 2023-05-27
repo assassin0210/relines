@@ -22,10 +22,7 @@ export const TableContent = memo(
       () => columns.map((el) => getParamWidth(el)).join(" "),
       [columns]
     )
-    const showNoData = useMemo(
-      () => data.length === 0 && status === "loaded",
-      [data.length, status]
-    )
+    const showNoData = useMemo(() => data.length === 0, [data.length, status])
     return (
       <div className={"relative"}>
         <div
