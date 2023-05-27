@@ -35,7 +35,7 @@ export const Modal = ({
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              className="absolute z-[100] w-full h-full top-0 left-0 flex items-center justify-center backdrop-blur-md  bg-gray-100/50"
+              className="absolute z-[100] w-full h-screen top-0 left-0 flex items-center justify-center backdrop-blur-md  bg-gray-100/50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
