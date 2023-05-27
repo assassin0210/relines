@@ -6,7 +6,9 @@ import { RootStateType } from "./store"
 
 export const getUsersRequest = createAsyncThunk(
   "getUsersRequest",
-  async ({ page = 1 }: { page?: number }, { getState }) => {
+  async (_: void, { getState }) => {
+    const page = (getState() as RootStateType).main.users.page
+
     const { data } = await instance.get<IUser[]>(`?size=10&page=${page}`)
     if (page > 1) {
       return [...(getState() as RootStateType).main.users.data, ...data]

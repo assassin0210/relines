@@ -1,25 +1,27 @@
-import React, { useCallback, useState } from "react"
+import React, { useCallback } from "react"
 
 import { Button } from "../../components/button/Button"
+import { saveTableData } from "../../helpers/saveTableData"
 import { useAppDispatch } from "../../hooks/useAppDispatch"
 import { useAppSelector } from "../../hooks/useAppSelector"
 import { getUsersRequest } from "../../store/requests"
+import { setPage } from "../../store/slice"
 
 export const UsersTableFooter = () => {
   const dispatch = useAppDispatch()
-  const [page, setPage] = useState(2)
   const disabled = useAppSelector(
     (state) => state.main.users.status === "loading"
   )
+
   const handleNext = useCallback(() => {
-    // eslint-disable-next-line no-console
-    dispatch(getUsersRequest({ page }))
-    setPage((prev) => prev + 1)
-  }, [dispatch, page])
+    dispatch(setPage())
+    dispatch(getUsersRequest())
+  }, [dispatch])
 
   const handleRefresh = () => {
-    dispatch(getUsersRequest({}))
-    setPage(2)
+    dispatch(setPage("refresh"))
+    saveTableData([], 1)
+    dispatch(getUsersRequest())
   }
   return (
     <div className={"mt-4  space-x-4"}>
