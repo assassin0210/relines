@@ -13,6 +13,7 @@ export const UsersTable = () => {
     <Table
       itemsPerPage={["10"]}
       data={data}
+      className={"mt-5"}
       columns={columns}
       status={status}
     />
@@ -23,13 +24,13 @@ const useColumns = () => {
   const columns: ITableColumns<IUser>[] = [
     {
       field: "leftSide",
-      title: "test",
+      title: "Все юзеры",
       gridWidth: "auto",
       render: (props) => <LeftSideCell {...props} />,
     },
     {
       field: "rightSide",
-      title: "test",
+      title: "Юзеры с рейтингом ",
       render: (props) => <RightSideCell {...props} />,
     },
   ]
