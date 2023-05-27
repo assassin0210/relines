@@ -71,7 +71,7 @@ module.exports = {
             maxWidth: "1280px",
           },
         },
-      });
+      })
     },
   ],
-};
+}
