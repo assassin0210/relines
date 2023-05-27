@@ -1,6 +1,7 @@
 import { useCallback } from "react"
 
-import { decrementRating, incrementRating } from "../store/slice"
+import { MODAL_NAMES } from "../consts/common"
+import { decrementRating, incrementRating, setModal } from "../store/slice"
 import { useAppDispatch } from "./useAppDispatch"
 import { useAppSelector } from "./useAppSelector"
 
@@ -12,21 +13,46 @@ export const useUserRatingActions = () => {
       const currentUser = users.find((el) => el.uid === uid)
 
       if (type === "increment") {
-        if ((currentUser?.rating || 0) > 4) {
-          // eslint-disable-next-line no-console
-          return console.log("open modal")
-        }
-        // eslint-disable-next-line no-console
-        console.log("increment")
-        dispatch(incrementRating(uid))
-      } else if (type === "decrement") {
-        if ((currentUser?.rating || 0) < -4) {
-          // eslint-disable-next-line no-console
-          return console.log("open modal")
+        if ((currentUser?.rating || 0) === 5) {
+          return dispatch(
+            setModal({
+              currentModal: MODAL_NAMES.INCREMENT_MODAL,
+              name: currentUser?.first_name,
+              uid: uid,
+            })
+          )
+        } else if ((currentUser?.rating || 0) === 4) {
+          dispatch(incrementRating(uid))
+          return dispatch(
+            setModal({
+              currentModal: MODAL_NAMES.INCREMENT_MODAL,
+              name: currentUser?.first_name,
+              uid: uid,
+            })
+          )
         }
 
-        // eslint-disable-next-line no-console
-        console.log("increment")
+        dispatch(incrementRating(uid))
+      } else if (type === "decrement") {
+        if ((currentUser?.rating || 0) === -5) {
+          return dispatch(
+            setModal({
+              currentModal: MODAL_NAMES.DECREMENT_MODAL,
+              name: currentUser?.first_name,
+              uid: uid,
+            })
+          )
+        } else if ((currentUser?.rating || 0) === -4) {
+          dispatch(decrementRating(uid))
+          return dispatch(
+            setModal({
+              currentModal: MODAL_NAMES.DECREMENT_MODAL,
+              name: currentUser?.first_name,
+              uid: uid,
+            })
+          )
+        }
+
         dispatch(decrementRating(uid))
       }
     },

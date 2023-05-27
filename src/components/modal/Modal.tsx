@@ -4,14 +4,13 @@ import { createPortal } from "react-dom"
 
 import { useAppDispatch } from "../../hooks/useAppDispatch"
 import { setModal } from "../../store/slice"
-import { Button } from "../button/Button"
 
 export const Modal = ({
   isOpen,
   children,
 }: {
   isOpen: boolean
-  children: ReactNode
+  children: (onCloseModal: () => void) => ReactNode
 }) => {
   const defaultContainer = useMemo(
     () => document.getElementById("modal-container") || document.body,
@@ -19,7 +18,9 @@ export const Modal = ({
   )
   const [isRendered, setIsRendered] = useState(false)
   const dispatch = useAppDispatch()
-  const handleModalClose = () => {
+  const onCloseModal = () => {
+    // eslint-disable-next-line no-console
+    console.log("Пользователь закрыл модальное окно")
     setIsRendered(false)
     setTimeout(() => {
       dispatch(setModal())
@@ -47,8 +48,7 @@ export const Modal = ({
                 exit={{ y: "-50%", opacity: 0, scale: 1.3 }}
                 transition={{ duration: 0.2, stiffness: 100 }}
               >
-                <Button onClick={handleModalClose}>close</Button>
-                {children}
+                {children(onCloseModal)}
               </motion.div>
             </motion.div>
           )}

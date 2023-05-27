@@ -13,7 +13,7 @@ function App() {
   }, [data.data.length, dispatch])
 
   return (
-    <div className="App bg-blue-100 min-h-screen h-full">
+    <div className="App bg-mainBlue min-h-screen h-full">
       <UsersPage />
       <div id={"modal-container"} />
     </div>

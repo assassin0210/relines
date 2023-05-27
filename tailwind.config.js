@@ -16,6 +16,8 @@ module.exports = {
         mainBlue: "#0e172a",
         blue: {
           100: "rgb(29,41,65)",
+          200: "rgb(204,204,231)",
+          300: "rgb(176,176,199)",
         },
         mainGreen: "#00c976",
         green: {

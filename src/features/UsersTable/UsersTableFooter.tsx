@@ -26,10 +26,10 @@ export const UsersTableFooter = () => {
   return (
     <div className={"mt-4  space-x-4"}>
       <Button disabled={disabled} onClick={handleRefresh}>
-        Refresh
+        Обновить список
       </Button>
       <Button disabled={disabled} onClick={handleNext}>
-        Next users
+        Следующая страница
       </Button>
     </div>
   )

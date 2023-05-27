@@ -1,7 +1,10 @@
 import React from "react"
 
 import { Button } from "../../components/button/Button"
+import { P16 } from "../../components/typography"
+import { useAppDispatch } from "../../hooks/useAppDispatch"
 import { useUserRatingActions } from "../../hooks/useUserRatingActions"
+import { resetRating } from "../../store/slice"
 import { IUser } from "../../types/common"
 
 export const LeftSideCell = ({
@@ -11,32 +14,18 @@ export const LeftSideCell = ({
   rating,
   uid,
 }: IUser) => {
-  const ratingActions = useUserRatingActions()
   if (typeof rating === "number") {
     return <></>
   }
   return (
     <div className={"flex items-center justify-between w-full gap-1"}>
-      <div className={"flex items-center gap-1"}>
+      <div className={"flex items-center gap-1 mr-auto"}>
         <img className={"w-6"} src={avatar} alt="avatar" />
-        <span>
-          {first_name} {last_name[0]}
-        </span>
+        <P16 className={"truncate !font-medium"}>
+          {first_name} {last_name[0]}.
+        </P16>
       </div>
-      <div className={"space-x-2"}>
-        <Button
-          className={"w-6"}
-          onClick={() => ratingActions(uid, "increment")}
-        >
-          +
-        </Button>
-        <Button
-          className={"w-6"}
-          onClick={() => ratingActions(uid, "decrement")}
-        >
-          -
-        </Button>
-      </div>
+      <Actions rating={rating} uid={uid} />
     </div>
   )
 }
@@ -48,35 +37,47 @@ export const RightSideCell = ({
   rating,
   uid,
 }: IUser) => {
-  const ratingActions = useUserRatingActions()
-
   if (typeof rating !== "number") {
     return <></>
   }
   return (
     <div className={"flex items-center gap-1 w-full"}>
-      <div className={"space-x-2 flex items-center"}>
-        <Rating rating={rating} />
-        <Button
-          className={"w-6"}
-          onClick={() => ratingActions(uid, "increment")}
-        >
-          +
-        </Button>
-        <Button
-          className={"w-6"}
-          onClick={() => ratingActions(uid, "decrement")}
-        >
-          -
-        </Button>
-      </div>
+      <Actions rating={rating} uid={uid} />
       <div className={"flex items-center gap-1"}>
         <img className={"w-6"} src={avatar} alt="avatar" />
 
-        <span>
+        <P16 className={"truncate !font-medium"}>
           {first_name} {last_name[0]}
-        </span>
+        </P16>
       </div>
+    </div>
+  )
+}
+
+const Actions = ({
+  uid,
+  rating,
+}: {
+  uid: string
+  rating: number | null | undefined
+}) => {
+  const dispatch = useAppDispatch()
+
+  const ratingActions = useUserRatingActions()
+  return (
+    <div className={"tablet:space-x-2 space-x-1 flex items-center"}>
+      {typeof rating === "number" && <Rating rating={rating} />}
+      <Button className={"w-6"} onClick={() => ratingActions(uid, "increment")}>
+        +
+      </Button>
+      <Button className={"w-6"} onClick={() => ratingActions(uid, "decrement")}>
+        -
+      </Button>
+      {rating === 0 && (
+        <Button className={"w-6"} onClick={() => dispatch(resetRating(uid))}>
+          Удалить
+        </Button>
+      )}
     </div>
   )
 }
@@ -118,10 +119,10 @@ const Rating = ({ rating }: { rating: number }) => {
     }
   }
   return (
-    <div
-      className={`w-6 h-6 rounded-full   flex items-center justify-center transition ${getColor()}`}
+    <span
+      className={`w-6 h-6 rounded-full text-black text-[14px] tablet:text-[16px]  flex items-center justify-center transition ${getColor()}`}
     >
       {rating}
-    </div>
+    </span>
   )
 }
