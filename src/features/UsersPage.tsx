@@ -8,7 +8,7 @@ export const UsersPage = () => {
   return (
     <div className={"py-5 max-w-[1200px] px-2 mx-auto"}>
       <P16 className={"text-white"}>
-        Данное тестовое задание выболнено{" "}
+        Данное тестовое задание выполнено{" "}
         <a
           className={"!text-mainGreen"}
           target={"_blank"}
