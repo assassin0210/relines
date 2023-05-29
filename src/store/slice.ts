@@ -74,7 +74,7 @@ const mainSlice = createSlice({
     },
     decrementRating: (state, { payload }: PayloadAction<string>) => {
       // eslint-disable-next-line no-console
-      console.log(`Пользователь умеьшил юзеру с  uid ${payload} рейтинг на 1`)
+      console.log(`Пользователь уменьшил юзеру с  uid ${payload} рейтинг на 1`)
 
       const newData = state.users.data.map((user) => {
         if (user.uid === payload) {
